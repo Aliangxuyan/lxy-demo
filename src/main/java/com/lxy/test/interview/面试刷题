@@ -1,0 +1,5 @@
+1、验证 volatile 的可见性、
+com.lxy.test.VolatileDemo.java
+
+2、CAS 是什么，比较并交换
+

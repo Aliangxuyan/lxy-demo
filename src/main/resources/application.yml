@@ -1,0 +1,109 @@
+spring:
+  profiles.active: local
+
+
+---
+spring:
+  profiles: local
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+  output:
+    ansi:
+      enabled: always
+  resources:
+    add-mappings: false
+  rabbitmq:
+    host: 172.16.0.29
+    port: 5672
+    username: guest
+    password: guest
+  redis:
+    host: 172.16.0.27
+    port: 19000
+
+idc.no: 0
+
+zookeeper:
+  zookeeperAddress: 172.16.0.50:2181,172.16.0.26:2181,172.16.0.27:2181
+  serviceName: order-services  #服务名称
+  basePath: /order   #服务根路径
+  servicePath: /order-services  #服务注册路径
+  lockPath: /order/lock  #分布式锁路径
+
+brave:
+  kafkaURI: 172.16.1.159:9092
+
+
+kafka:
+  bootstrap-servers: 172.16.0.30:9093, 172.16.0.31:9093, 172.26.0.32:9093
+  topics: db_order_new  #用el表达式解析，中间不能有空格
+  concurrency: 2
+  legacyGroupID: canal_sync_legacy_dohko
+  userGroupID: canal_sync_user_dohko
+  orderStatusGroupID: canal_order_status_dohko
+
+datasource:
+  url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000
+  username: root
+  password: root
+  driverClassName: com.mysql.jdbc.Driver
+  initialSize: 2
+  maxActive: 4
+  minIdle: 1
+  validationQuery: SELECT 1
+
+redisStock:
+  host: codis.test.hualala.com
+  port: 19000
+  db: 0
+  pool:
+    maxActive: 10
+    maxWait: 10000
+    writeTimeout: 1000
+    readTimeout: 1000
+    maxIdle: 5
+    minIdle: 5
+
+rabbitmq:
+  #    payCallbackExchangeName: mu_hll:service:order:payment:callback:exchange
+  payCallbackExchangeName: dohko_hll:service:pay:exchange:orderNotify
+  #    payCallbackQueueName: mu_hll:service:order:payment:callback:queue
+  payCallbackQueueName: dohko_hll:service:pay:queue:orderNotify
+  settleExchangeName: dohko_hll:service:pay:exchange:orderSettle
+  settleRouteKey: order_settle_route_key
+  shardSettleExchangeName: hll:service:pay:exchange:request_data
+  shardSettleRouteKey: ORDER_SETTLE_ROUTE_KEY
+  settleCallbackExchangeName: dohko_hll:service:pay:exchange:settleNotify
+  settleCallbackQueueName: dohko_hll:service:order:settlement:callback:queue
+  refundCallbackExchangeName: dohko_hll:service:pay:exchange:refundNotify
+  refundCallbackQueueName: dohko_hll:service:order:refund:queue
+  legacyDBWriteExchangeName: dohko_hll:service:order:legacy:new:db:exchange
+  legacyDBWriteQueueName: dohko_hll:service:order:legacy:new:db:queue
+  orderQueryDataExchangeName: dohko_hll:service:order:querydata:db:exchange
+  orderQueryDataQueueName: dohko_hll:service:order:querydata:db:queue
+  wechatRestOrderSubmittedExchangeName:  dohko_hll:service:order:wechat:rest:submitted:exchange
+  retryLegacyExchangeName: dohko_hll:service:order:legacy:db:retry:exchange
+  retryLegacyQueueName: dohko_hll:service:order:legacy:db:retry:queue
+  retrySettleExchangeName: dohko_hll:service:order:settle:db:retry:exchange
+  retrySettleQueueName: dohko_hll:service:order:settle:db:retry:queue
+  orderStatusExchangeName: hll:service:order:status:machine:exchang
+  reply230ExchangeName: dohko_hll:service:order:reply230:exchange
+
+
+logging:
+  config: classpath:logback-local.xml
+
+
+endpoints:
+  health:
+    enabled: true
+    time-to-live: 5000
+    sensitive: false
+
+#mule
+platform:
+  client:
+    conn:
+      url: tcp://dohko.activemq4.hualala.com:61616
+
