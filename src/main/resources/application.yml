@@ -13,16 +13,18 @@ spring:
       enabled: always
   resources:
     add-mappings: false
+
   rabbitmq:
-    host: 172.16.0.29
+    host: 172.16.0.45
     port: 5672
-    username: guest
-    password: guest
+    username: admin
+    password: admin
+
   redis:
     host: 172.16.0.27
     port: 19000
 
-idc.no: 0
+
 
 zookeeper:
   zookeeperAddress: 172.16.0.50:2181,172.16.0.26:2181,172.16.0.27:2181
@@ -30,9 +32,6 @@ zookeeper:
   basePath: /order   #服务根路径
   servicePath: /order-services  #服务注册路径
   lockPath: /order/lock  #分布式锁路径
-
-brave:
-  kafkaURI: 172.16.1.159:9092
 
 
 kafka:
@@ -44,7 +43,7 @@ kafka:
   orderStatusGroupID: canal_order_status_dohko
 
 datasource:
-  url: jdbc:mysql://dohko.mysql.001.master.hualala.com:3306/db_order?statementInterceptors=brave.mysql.TracingStatementInterceptor&socketTimeout=60000
+  url: jdbc:mysql://localhost:3306/lxy-demo
   username: root
   password: root
   driverClassName: com.mysql.jdbc.Driver
@@ -66,44 +65,19 @@ redisStock:
     minIdle: 5
 
 rabbitmq:
-  #    payCallbackExchangeName: mu_hll:service:order:payment:callback:exchange
-  payCallbackExchangeName: dohko_hll:service:pay:exchange:orderNotify
-  #    payCallbackQueueName: mu_hll:service:order:payment:callback:queue
-  payCallbackQueueName: dohko_hll:service:pay:queue:orderNotify
-  settleExchangeName: dohko_hll:service:pay:exchange:orderSettle
-  settleRouteKey: order_settle_route_key
-  shardSettleExchangeName: hll:service:pay:exchange:request_data
-  shardSettleRouteKey: ORDER_SETTLE_ROUTE_KEY
-  settleCallbackExchangeName: dohko_hll:service:pay:exchange:settleNotify
-  settleCallbackQueueName: dohko_hll:service:order:settlement:callback:queue
-  refundCallbackExchangeName: dohko_hll:service:pay:exchange:refundNotify
-  refundCallbackQueueName: dohko_hll:service:order:refund:queue
-  legacyDBWriteExchangeName: dohko_hll:service:order:legacy:new:db:exchange
-  legacyDBWriteQueueName: dohko_hll:service:order:legacy:new:db:queue
-  orderQueryDataExchangeName: dohko_hll:service:order:querydata:db:exchange
-  orderQueryDataQueueName: dohko_hll:service:order:querydata:db:queue
-  wechatRestOrderSubmittedExchangeName:  dohko_hll:service:order:wechat:rest:submitted:exchange
-  retryLegacyExchangeName: dohko_hll:service:order:legacy:db:retry:exchange
-  retryLegacyQueueName: dohko_hll:service:order:legacy:db:retry:queue
-  retrySettleExchangeName: dohko_hll:service:order:settle:db:retry:exchange
-  retrySettleQueueName: dohko_hll:service:order:settle:db:retry:queue
   orderStatusExchangeName: hll:service:order:status:machine:exchang
-  reply230ExchangeName: dohko_hll:service:order:reply230:exchange
+  orderStatusTopicExchangeName: hll:service:order:status:machine:topicexchange
+  orderStatusTestTopicQueueName : hll:service:order:status:machine:saas:sub_buffet:test
+  routeKeyPrefix: order.statusmachine
+  # 线上不能使用 存在的ordeType ，防止消息积压或者被测试类消费掉
+  routeKey: order.*
+  orderStatusTestTopicQueueNoConsumeName : hll:service:order:status:machine:no:consume #  测试只写入queue 不消费
+  routeKeyNoConsume: lxy.test.no.*
+
 
 
 logging:
   config: classpath:logback-local.xml
 
 
-endpoints:
-  health:
-    enabled: true
-    time-to-live: 5000
-    sensitive: false
-
-#mule
-platform:
-  client:
-    conn:
-      url: tcp://dohko.activemq4.hualala.com:61616
 
