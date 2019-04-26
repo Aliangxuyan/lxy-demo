@@ -34,7 +34,7 @@
 
         <!-- sqlMapGenerator：sql映射生成策略： -->
         <sqlMapGenerator targetPackage="com.lxy.mybatis.dao"
-                         targetProject="./conf">
+                         targetProject="./">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
