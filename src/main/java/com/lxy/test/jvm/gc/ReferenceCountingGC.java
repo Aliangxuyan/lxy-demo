@@ -1,4 +1,4 @@
-package com.lxy.test.jvm;
+package com.lxy.test.jvm.gc;
 
 /**
  * Created by lxy on 2018/12/19.

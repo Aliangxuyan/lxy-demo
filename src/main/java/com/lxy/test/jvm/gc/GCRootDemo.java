@@ -1,4 +1,4 @@
-package com.lxy.test.jvm;
+package com.lxy.test.jvm.gc;
 
 /**
  * @author lxy
