@@ -1,4 +1,4 @@
-package com.lxy.test.datastructure;
+package com.lxy.test.datatructuresalgorithms.datastructure;
 
 /**
  * Created by lxy on 2019/4/19.
