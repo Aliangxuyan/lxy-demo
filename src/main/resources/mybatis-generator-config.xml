@@ -26,7 +26,7 @@
         targetPackage="test.model"：目标包名
         targetProject="\MBGTestProject\src"：目标工程
         -->
-        <javaModelGenerator targetPackage="com.lxy.test.whole.bean"
+        <javaModelGenerator targetPackage="com.lxy.test.middle.whole.bean"
                             targetProject="./src">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
@@ -39,7 +39,7 @@
         </sqlMapGenerator>
 
         <!-- javaClientGenerator:指定mapper接口所在的位置 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lxy.test.whole.dao"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.lxy.test.middle.whole.dao"
                              targetProject="./src">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
