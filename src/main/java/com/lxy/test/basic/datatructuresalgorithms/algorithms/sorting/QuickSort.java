@@ -28,6 +28,7 @@ public class QuickSort {
     }
 
     private static int partition(int[] a, int p, int r) {
+        // 选择最后一个位置作为分区点
         int pivot = a[r];
         int i = p;
         for (int j = p; j < r; ++j) {
@@ -42,11 +43,12 @@ public class QuickSort {
             }
         }
 
+        // 前面将数据分为大于 pivot 和小于 pivot（pivot）， 将pivot 数据 插入到合适的位置
+        // 继续循环将分开的数据进行类似判断，知道没有值，即排序完成
         int tmp = a[i];
         a[i] = a[r];
         a[r] = tmp;
 
-        System.out.println("i=" + i);
         return i;
     }
 }

@@ -19,9 +19,9 @@ import java.nio.ByteBuffer;
  * <p>
  * ByteBuffer.allocate ：第一种凡事是分配JVM 堆内存，属于GC 管辖范围，由于需要拷贝所以速度相对较慢
  * <p>
- * ByteBuffer.allocateDirect ： 第二种方式是分配 os 本地呢村，不属于GC 管辖范围，由于不需要拷贝所以速度相对较快
+ * ByteBuffer.allocateDirect ： 第二种方式是分配 os 本地内存，不属于GC 管辖范围，由于不需要拷贝所以速度相对较快
  * <p>
- * 但如果不断分配本地内存，堆内存很少使用，那么JVM 就不需要执行GC，DirectVyteBuffer 对象们就不会被回收
+ * 但如果不断分配本地内存，堆内存很少使用，那么JVM 就不需要执行GC，DirectByteBuffer 对象们就不会被回收
  * 这样堆内存充足，但本地内存可能已经是用光了，再次尝试分配本地内存就会出现
  * <p>
  * 那程序就直接崩溃了。

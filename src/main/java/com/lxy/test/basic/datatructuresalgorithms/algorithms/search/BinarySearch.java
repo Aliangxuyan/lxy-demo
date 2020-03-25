@@ -26,7 +26,8 @@ public class BinarySearch {
         int high = n - 1;
 
         while (low <= high) {
-            int mid = (low + high) / 2;
+            // int mid = (low + high) / 2; 防止越界
+            int mid = low + ((high - low) >> 1);
             if (a[mid] == value) {
                 return mid;
             } else if (a[mid] < value) {
@@ -86,6 +87,42 @@ public class BinarySearch {
 
         if (low < n && a[low] == value) return low;
         else return -1;
+    }
+
+    /**
+     * 查找第一次出现和第二次出现的位置 leecode 上提交超时
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int low = 0;
+        int n = nums.length - 1;
+        int high = n  ;
+        int[] targetRange = {-1, -1};
+        while(low <= high){
+            // 使用位移替换 (low + hight) / 2
+            int mid = low + ((high - low)>>1);
+            if(target < nums[mid]){
+                high = mid - 1;
+            } else if(target > nums[mid]){
+                low = mid +1;
+            } else{
+                // 第一个元素
+                if((mid == 0 )|| (nums[mid-1] != target)){
+                    targetRange[0] = mid;
+                } else {
+                    high = mid -1;
+                }
+                // 最后一个元素
+                if((mid == n)|| (nums[mid + 1] > target)){
+                    targetRange[1] = mid;
+                } else{
+                    low = mid + 1;
+                }
+            }
+        }
+        return targetRange;
     }
 
     /**
