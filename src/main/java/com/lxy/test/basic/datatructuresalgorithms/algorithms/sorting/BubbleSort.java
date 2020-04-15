@@ -17,7 +17,7 @@ public class BubbleSort {
     public static void bubbleSort(int[] a, int n) {
         // 提前退出冒泡循环的标志位
         boolean flag = false;
-        if (n < 0) return;
+        if (n <=0) return;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 if (a[j] > a[j + 1]) { // 交换

@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class HelloGC {
     public static void main(String[] args) {
-//        // -Xms10m -Xmm10m
-//        byte[] bigByte = new byte[50 * 1024 * 1024];
-        block();
+//        // -Xms10m -Xmn10m
+        byte[] bigByte = new byte[50 * 1024 * 1024];
+//        block();
     }
 
     /**

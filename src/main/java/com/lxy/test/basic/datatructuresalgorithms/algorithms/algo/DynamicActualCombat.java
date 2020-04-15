@@ -148,4 +148,82 @@ public class DynamicActualCombat {
     }
 
 
+    public static int knapsack3(int[] weight, int[] value, int n, int w) {
+        int[][] states = new int[n][w + 1];
+        for (int i = 0; i < n; ++i) { // 初始化states
+            for (int j = 0; j < w + 1; ++j) {
+                states[i][j] = -1;
+            }
+        }
+        states[0][0] = 0;
+        if (weight[0] <= w) {
+            states[0][weight[0]] = value[0];
+        }
+        for (int i = 1; i < n; ++i) { //动态规划，状态转移
+            for (int j = 0; j <= w; ++j) { // 不选择第i个物品
+                if (states[i - 1][j] >= 0) states[i][j] = states[i - 1][j];
+            }
+            for (int j = 0; j <= w - weight[i]; ++j) { // 选择第i个物品
+                if (states[i - 1][j] >= 0) {
+                    int v = states[i - 1][j] + value[i];
+                    if (v > states[i][j + weight[i]]) {
+                        states[i][j + weight[i]] = v;
+                    }
+                }
+            }
+        }
+        // 找出最大值
+        int maxvalue = -1;
+        for (int j = 0; j <= w; ++j) {
+            if (states[n - 1][j] > maxvalue) maxvalue = states[n - 1][j];
+        }
+        return maxvalue;
+    }
+
+
+    public int minDistDP(int[][] matrix, int n) {
+        int[][] states = new int[n][n];
+        int sum = 0;
+        for (int j = 0; j < n; ++j) { // 初始化states的第一行数据
+            sum += matrix[0][j];
+            states[0][j] = sum;
+        }
+        sum = 0;
+        for (int i = 0; i < n; ++i) { // 初始化states的第一列数据
+            sum += matrix[i][0];
+            states[i][0] = sum;
+        }
+        for (int i = 1; i < n; ++i) {
+            for (int j = 1; j < n; ++j) {
+                states[i][j] =
+                        matrix[i][j] + Math.min(states[i][j - 1], states[i - 1][j]);
+            }
+        }
+        return states[n - 1][n - 1];
+    }
+
+
+    private int[][] matrix =
+            {{1, 3, 5, 9}, {2, 1, 3, 4}, {5, 2, 6, 7}, {6, 8, 4, 3}};
+
+    private int[][] mem = new int[4][4];
+
+    public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
+        if (i == 0 && j == 0) return matrix[0][0];
+        if (mem[i][j] > 0) return mem[i][j];
+        int minLeft = Integer.MAX_VALUE;
+        if (j - 1 >= 0) {
+            minLeft = minDist(i, j - 1);
+        }
+        int minUp = Integer.MAX_VALUE;
+        if (i - 1 >= 0) {
+            minUp = minDist(i - 1, j);
+        }
+
+        int currMinDist = matrix[i][j] + Math.min(minLeft, minUp);
+        mem[i][j] = currMinDist;
+        return currMinDist;
+    }
+
+
 }

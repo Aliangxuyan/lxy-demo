@@ -26,7 +26,6 @@ public class QuickSort {
         quickSortInternally(a, p, q - 1);
         quickSortInternally(a, q + 1, r);
     }
-
     private static int partition(int[] a, int p, int r) {
         // 选择最后一个位置作为分区点
         int pivot = a[r];
