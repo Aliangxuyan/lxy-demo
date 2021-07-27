@@ -5,6 +5,8 @@ package com.lxy.test.basic.datatructuresalgorithms.datastructure;
  * @date 2020-03-19
  * <p>
  * 搜索引擎的搜索关键字提示功能底层_trie
+ *
+ * https://time.geekbang.org/column/article/72414
  */
 
 public class Trie {

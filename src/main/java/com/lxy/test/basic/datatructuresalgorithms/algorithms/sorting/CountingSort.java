@@ -5,6 +5,7 @@ import java.util.Arrays;
 /**
  * @author lxy
  * @date 2019-05-27
+ * 线性排序 —— 计数排序
  */
 public class CountingSort {
     public static void main(String[] args) {

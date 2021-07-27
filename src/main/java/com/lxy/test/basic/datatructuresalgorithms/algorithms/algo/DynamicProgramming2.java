@@ -23,12 +23,15 @@ public class DynamicProgramming2 {
     private int minDist = Integer.MAX_VALUE; // 全局变量或者成员变量
 
     // 调用方式：minDistBacktracing(0, 0, 0, w, n);
+    // i：行，j:列  dist: 走到每行的路径和  w 二维数组，n 维度
     public void minDistBT(int i, int j, int dist, int[][] w, int n) {
         // 到达了 n-1, n-1 这个位置了，这里看着有点奇怪哈，你自己举个例子看下
         if (i == n && j == n) {
+            // 对走到头的每一种情况判断总的路径长度，选最短路径
             if (dist < minDist) minDist = dist;
             return;
         }
+        // 构建递归树，走到每一种情况
         if (i < n) { // 往下走，更新 i=i+1, j=j
             minDistBT(i + 1, j, dist + w[i][j], w, n);
         }
@@ -70,6 +73,9 @@ public class DynamicProgramming2 {
 
     /**
      * 递归加"备忘录"的方式
+     * <p>
+     * <p>
+     * min_dist(i, j) = w[i][j] + min(min_dist(i, j-1), min_dist(i-1, j))
      */
     private int[][] mem = new int[4][4];
 
@@ -77,6 +83,8 @@ public class DynamicProgramming2 {
         if (i == 0 && j == 0) return array[0][0];
         if (mem[i][j] > 0) return mem[i][j];
         int minLeft = Integer.MAX_VALUE;
+
+        // 像上递归，
         if (j - 1 >= 0) {
             minLeft = minDist(i, j - 1);
         }

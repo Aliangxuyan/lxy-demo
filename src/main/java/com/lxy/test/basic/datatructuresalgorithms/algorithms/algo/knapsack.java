@@ -6,6 +6,8 @@ package com.lxy.test.basic.datatructuresalgorithms.algorithms.algo;
  * weight:物品重量，n:物品个数，w:背包可承载重量
  *
  * 我们假设背包的最大承载重量是 9。我们有 5 个不同的物品，每个物品的重量分别是 2，2，4，6，3
+ *
+ * https://time.geekbang.org/column/article/74788
  */
 
 public class knapsack {

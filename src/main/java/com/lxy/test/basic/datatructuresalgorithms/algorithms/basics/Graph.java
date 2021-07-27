@@ -1,6 +1,7 @@
 package com.lxy.test.basic.datatructuresalgorithms.algorithms.basics;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author lxy
@@ -24,6 +25,43 @@ public class Graph {
     }
 
     // *************************************2、DFS 算法 *****************************************
+
+
+    //    https://time.geekbang.org/column/article/70891
+    //其中 s 表示起始顶点，t 表示终止顶点
+    public void bfs(int s, int t) {
+        if (s == t) return;
+        boolean[] visited = new boolean[v];
+        visited[s] = true;
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(s);
+        int[] prev = new int[v];
+        for (int i = 0; i < v; ++i) {
+            prev[i] = -1;
+        }
+        while (queue.size() != 0) {
+            int w = queue.poll();
+            for (int i = 0; i < adj[w].size(); ++i) {
+                int q = adj[w].get(i);
+                if (!visited[q]) {
+                    prev[q] = w;
+                    if (q == t) {
+                        print(prev, s, t);
+                        return;
+                    }
+                    visited[q] = true;
+                    queue.add(q);
+                }
+            }
+        }
+    }
+
+    private void print(int[] prev, int s, int t) { // 递归打印s->t的路径
+        if (prev[t] != -1 && t != s) {
+            print(prev, s, prev[t]);
+        }
+        System.out.print(t + " ");
+    }
 
     /**
      * DFS 算法 ：深度优先搜索

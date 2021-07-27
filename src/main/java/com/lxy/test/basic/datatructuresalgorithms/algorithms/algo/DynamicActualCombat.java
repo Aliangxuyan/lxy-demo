@@ -170,6 +170,8 @@ public class DynamicActualCombat {
                         states[i][j + weight[i]] = v;
                     }
                 }
+
+
             }
         }
         // 找出最大值
@@ -181,6 +183,12 @@ public class DynamicActualCombat {
     }
 
 
+    /**
+     *
+     * @param matrix
+     * @param n
+     * @return
+     */
     public int minDistDP(int[][] matrix, int n) {
         int[][] states = new int[n][n];
         int sum = 0;
@@ -224,6 +232,5 @@ public class DynamicActualCombat {
         mem[i][j] = currMinDist;
         return currMinDist;
     }
-
 
 }
